@@ -1,5 +1,8 @@
 package com.registros.autocasher.models;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -19,6 +22,8 @@ import javax.persistence.Table;
 @DiscriminatorColumn(name = "tipo", length = 1, discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("R")
 @Table(name="TB_REGISTRO")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "tipo")
+@JsonSubTypes({@JsonSubTypes.Type(value = Abastecimento.class, name = "Abastecimento")})
 public class Registro implements Serializable {
     private static final long serialVersionUID = 1L;
     
