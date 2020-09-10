@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.DiscriminatorValue;
@@ -11,7 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@DiscriminatorValue(value = "A")
+//@DiscriminatorValue("A")
+@JsonTypeName("abastecimento")
 public class Abastecimento extends Registro{
     private static final long serialVersionUID = 1L;
     

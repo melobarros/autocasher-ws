@@ -1,5 +1,6 @@
 package com.registros.autocasher.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
@@ -19,12 +20,13 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo", length = 1, discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue("R")
+//@DiscriminatorColumn(name = "tipo", length = 1, discriminatorType = DiscriminatorType.STRING)
+//@DiscriminatorValue("R")
 @Table(name="TB_REGISTRO")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "tipo")
-@JsonSubTypes({@JsonSubTypes.Type(value = Abastecimento.class, name = "Abastecimento")})
-public class Registro implements Serializable {
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "tipo")
+@JsonSubTypes({ @JsonSubTypes.Type(value = Abastecimento.class, name = "abastecimento"), 
+                @JsonSubTypes.Type(value = Gasto.class, name = "gasto")})
+public abstract class Registro implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -36,8 +38,8 @@ public class Registro implements Serializable {
     private String observacao;
     private String local;
     
-    @Column(insertable=false, updatable=false)
-    private String tipo;
+    @JsonProperty
+    private String tipo = this.getClass().getSimpleName();
 
     public long getId() {
         return id;
@@ -70,6 +72,15 @@ public class Registro implements Serializable {
     public void setLocal(String local) {
         this.local = local;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     
     
 }
