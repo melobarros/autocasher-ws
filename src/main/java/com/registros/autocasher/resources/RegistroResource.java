@@ -7,12 +7,8 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,23 +30,5 @@ public class RegistroResource {
     @ApiOperation(value="Retorna um registro baseado no id")
     public Registro listaRegistroUnico(@PathVariable(value="id") long id){
         return registroRepository.findById(id);
-    }
-    
-    @PostMapping("/registro")
-    @ApiOperation(value="Salva um novo registro")
-    public Registro salvaRegistro(@RequestBody Registro registro){
-        return registroRepository.save(registro);
-    }
-    
-    @DeleteMapping("/registro")
-    @ApiOperation(value="Deleta um registro")
-    public void deletaRegistro(@RequestBody Registro registro){
-        registroRepository.delete(registro);
-    }
-    
-    @PutMapping("/registro")
-    @ApiOperation(value="Atualiza um registro")
-    public Registro atualizaRegistro(@RequestBody Registro registro){
-        return registroRepository.save(registro);
     }
 }
