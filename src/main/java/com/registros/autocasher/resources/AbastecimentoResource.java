@@ -4,6 +4,7 @@ import com.registros.autocasher.models.Abastecimento;
 import com.registros.autocasher.repository.AbastecimentoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +29,12 @@ public class AbastecimentoResource {
     @ApiOperation(value="Retorna a lista de todos os abastecimentos")
     public List<Abastecimento> listaAbastecimentos(){
         return abastecimentoRepository.findAll();
+    }
+    
+    @GetMapping("/registro/abastecimento/betweenDates")
+    @ApiOperation(value="Retorna a lista de todos os abastecimentos entre a data de comeco e de fim")
+    public List<Abastecimento> listaAbastecimentoEntreDatas(){
+        return abastecimentoRepository.getAbastecimentosBetweenDates();
     }
     
     @GetMapping("/registro/abastecimento/{id}")
