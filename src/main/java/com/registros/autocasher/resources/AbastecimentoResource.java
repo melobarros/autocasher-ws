@@ -36,7 +36,8 @@ public class AbastecimentoResource {
     @GetMapping("/registro/abastecimento/{startDate}/{endDate}")
     @ApiOperation(value="Retorna a lista de todos os abastecimentos entre a data de comeco e de fim")
     public List<Abastecimento> listaAbastecimentoEntreDatas(@PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate, 
-                                                            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate){
+                                                            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate)
+    {
         return abastecimentoRepository.getAbastecimentosBetweenDates(startDate, endDate);
     }
     
