@@ -5,8 +5,10 @@ import com.registros.autocasher.repository.AbastecimentoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,10 +33,11 @@ public class AbastecimentoResource {
         return abastecimentoRepository.findAll();
     }
     
-    @GetMapping("/registro/abastecimento/betweenDates")
+    @GetMapping("/registro/abastecimento/{startDate}/{endDate}")
     @ApiOperation(value="Retorna a lista de todos os abastecimentos entre a data de comeco e de fim")
-    public List<Abastecimento> listaAbastecimentoEntreDatas(){
-        return abastecimentoRepository.getAbastecimentosBetweenDates();
+    public List<Abastecimento> listaAbastecimentoEntreDatas(@PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate, 
+                                                            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate){
+        return abastecimentoRepository.getAbastecimentosBetweenDates(startDate, endDate);
     }
     
     @GetMapping("/registro/abastecimento/{id}")
