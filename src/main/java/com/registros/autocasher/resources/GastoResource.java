@@ -5,8 +5,10 @@ import com.registros.autocasher.models.Gasto;
 import com.registros.autocasher.repository.GastoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,14 @@ public class GastoResource {
         return gastoRepository.findAll();
     }
     
+    @GetMapping("/registro/gasto/{startDate}/{endDate}")
+    @ApiOperation(value="Retorna a lista de todos os gastos entre as datass de comeco e de fim")
+    public List<Gasto> listaGastoEntreDatas(@PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate, 
+                                                            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate)
+    {
+        return gastoRepository.getGastosBetweenDates(startDate, endDate);
+    }
+    
     @GetMapping("/registro/gasto/{id}")
     @ApiOperation(value="Retorna um gasto baseado no id")
     public Gasto listaGastoUnico(@PathVariable(value="id") long id){
@@ -39,7 +49,7 @@ public class GastoResource {
     
     @PostMapping("/registro/gasto")
     @ApiOperation(value="Salva um novo gasto")
-    public Gasto salvaAbastecimento(@RequestBody Gasto gasto){
+    public Gasto salvaGasto(@RequestBody Gasto gasto){
         return gastoRepository.save(gasto);
     }
     

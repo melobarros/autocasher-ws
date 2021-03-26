@@ -1,11 +1,14 @@
 package com.registros.autocasher.resources;
 
+import com.registros.autocasher.models.Gasto;
 import com.registros.autocasher.models.Lembrete;
 import com.registros.autocasher.repository.LembreteRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +31,14 @@ public class LembreteResource{
     @ApiOperation(value="Retorna a lista de todos os lembretes")
     public List<Lembrete> listaLembretes(){
         return lembreteRepository.findAll();
+    }
+    
+    @GetMapping("/registro/lembrete/{startDate}/{endDate}")
+    @ApiOperation(value="Retorna a lista de todos os lembretes entre as datass de comeco e de fim")
+    public List<Lembrete> listaLembreteEntreDatas(@PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate, 
+                                                            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate)
+    {
+        return lembreteRepository.getLembretesBetweenDates(startDate, endDate);
     }
     
     @GetMapping("/registro/lembrete/{id}")

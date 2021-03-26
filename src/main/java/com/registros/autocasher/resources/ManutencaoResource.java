@@ -1,11 +1,14 @@
 package com.registros.autocasher.resources;
 
+import com.registros.autocasher.models.Lembrete;
 import com.registros.autocasher.models.Manutencao;
 import com.registros.autocasher.repository.ManutencaoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +35,14 @@ public class ManutencaoResource {
         return manutencaoRepository.findAll();
     }
 
+    @GetMapping("/registro/manutencao/{startDate}/{endDate}")
+    @ApiOperation(value="Retorna a lista de todas as manutencoes entre as datass de comeco e de fim")
+    public List<Manutencao> listaManutencaoEntreDatas(@PathVariable(value="startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate, 
+                                                            @PathVariable(value="endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate)
+    {
+        return manutencaoRepository.getManutencoesBetweenDates(startDate, endDate);
+    }
+    
     @GetMapping("/registro/manutencao/{id}")
     @ApiOperation(value="Retorna um manutencao baseado no id")
     public Manutencao listaManutencaoUnico(@PathVariable(value="id") long id){
