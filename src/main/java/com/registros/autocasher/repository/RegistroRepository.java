@@ -11,6 +11,6 @@ import org.springframework.data.repository.query.Param;
 public interface RegistroRepository extends JpaRepository<Registro, Long> {
     Registro findById(long id);
     
-    @Query("select r from Registro r where tipo = 'Registro' and date_time between :startDate and :endDate")
+    @Query("select r from Registro r where date_time between :startDate and :endDate")
     List<Registro> getRegistrosBetweenDates(@Param("startDate")Date startDate, @Param("endDate")Date endDate);
 }
